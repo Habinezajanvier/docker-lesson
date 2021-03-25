@@ -1,0 +1,26 @@
+version: "3.0"
+services:
+  app:
+    image: docker-lesson
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=${PORT}
+      - DB_HOST=mongo
+    restart: always
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - "${PORT}:${PORT}"
+
+  mongo:
+    image: mongo
+    restart: always
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8086:8081
